@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excursie Roma 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Leaflet Routing Machine -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+        .map { height: 320px; border-radius: 1rem; }
+        .hero-bg {
+            background-image: linear-gradient(rgba(220,38,38,0.7), rgba(234,179,8,0.7)),
+                              url('https://images.unsplash.com/photo-1552832230-c0197dd311b5?q=80&w=1600&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Hero Section with Colosseum Background -->
+    <section class="hero-bg text-white py-20 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">Excursie Roma</h1>
+        <p class="text-lg md:text-xl">30 Mai - 2 Iunie 2026</p>
+    </section>
+
+    <!-- Flight & Transport Details -->
+    <section class="py-10 bg-white">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-2xl font-bold mb-6 text-center">Detalii Zbor și Transport</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-gray-100 p-6 rounded-2xl shadow">
+                    <h3 class="text-lg font-semibold mb-3">Zbor</h3>
+                    <ul class="list-disc pl-5 space-y-2 text-sm">
+                        <li><strong>Plecare:</strong> Aeroport Ghimbav, Brașov – 30 Mai 2026, ora 09:30</li>
+                        <li><strong>Sosire:</strong> Aeroport Leonardo da Vinci – Fiumicino, Roma – ora 10:45</li>
+                        <li><strong>Întoarcere:</strong> 2 Iunie 2026 (detaliile sunt gestionate separat)</li>
+                        <li><strong>Bagaj:</strong> Bagaj de mână (fără bagaj la cală)</li>
+                    </ul>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-2xl shadow">
+                    <h3 class="text-lg font-semibold mb-3">Cazare și Transfer</h3>
+                    <ul class="list-disc pl-5 space-y-2 text-sm">
+                        <li><strong>Cazare:</strong> Villa ViOla, Via Giuseppe Balzaretto 170, Roma</li>
+                        <li><strong>Transfer aeroport:</strong> Tren Leonardo Express până la Roma Termini</li>
+                        <li><strong>Continuare:</strong> Metrou linia A până la Battistini, apoi autobuz către cazare</li>
+                        <li><strong>Transport local:</strong> Metrou și autobuze pentru deplasările zilnice</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programul pe zile -->
+    <section class="bg-gray-100 py-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-2xl font-bold text-center mb-8">Programul pe zile</h2>
+
+            <div class="grid md:grid-cols-3 gap-6">
+
+                <!-- Day 1 -->
+                <div class="bg-white p-6 rounded-2xl shadow flex flex-col h-full">
+                    <h3 class="text-xl font-semibold mb-3">Ziua 1 – Sosire și Centrul Romei</h3>
+                    <ul class="list-disc pl-5 space-y-2 mb-4 text-sm flex-grow">
+                        <li>Sosire la Aeroportul Fiumicino și transfer la cazare.</li>
+                        <li>Piazza del Popolo și urcare în Villa Borghese pentru panorama orașului.</li>
+                        <li>Treptele Spaniole (Piazza di Spagna).</li>
+                        <li>Fontana di Trevi.</li>
+                        <li>Pantheon.</li>
+                        <li>Piazza Navona.</li>
+                        <li>Gelateria Della Palma pentru desert.</li>
+                    </ul>
+                    <div id="map-day1" class="map mb-3"></div>
+                    <p class="text-sm text-gray-600"><strong>Distanță estimată:</strong> ~4-5 km | <strong>Timp de parcurs:</strong> ~1h 30min</p>
+                </div>
+
+                <!-- Day 2 -->
+                <div class="bg-white p-6 rounded-2xl shadow flex flex-col h-full">
+                    <h3 class="text-xl font-semibold mb-3">Ziua 2 – Tur complet Vatican</h3>
+                    <ul class="list-disc pl-5 space-y-2 mb-4 text-sm flex-grow">
+                        <li>Deplasare de la cazare cu autobuz și metrou linia A până la Ottaviano.</li>
+                        <li>Muzeele Vaticanului: Curtea Piniei, Galeria Hărților, Galeria Tapiseriilor și Camerele lui Rafael.</li>
+                        <li>Capela Sixtină – frescele lui Michelangelo.</li>
+                        <li>Bazilica Sfântul Petru: Pietà, Baldachinul, mormântul apostolului Petru și urcare opțională în cupolă.</li>
+                        <li>Piața Sfântul Petru și colonadele lui Bernini.</li>
+                        <li>Plimbare pe Via della Conciliazione până la Castel Sant’Angelo.</li>
+                        <li>Opțional: Excursie la Lido di Ostia – plimbare pe faleză și relaxare pe plajă.</li>
+                    </ul>
+                    <div id="map-day2" class="map mb-3"></div>
+                    <p class="text-sm text-gray-600"><strong>Distanță estimată:</strong> ~3 km | <strong>Timp de parcurs:</strong> ~1h</p>
+                    <h4 class="text-lg font-semibold mt-4 mb-2">Traseu opțional – Lido di Ostia</h4>
+                    <div id="map-ostia" class="map mb-3"></div>
+                    <p class="text-sm text-gray-600"><strong>Distanță:</strong> ~30 km | <strong>Timp de parcurs:</strong> ~1h 15min / sens</p>
+                </div>
+
+                <!-- Day 3 -->
+                <div class="bg-white p-6 rounded-2xl shadow flex flex-col h-full">
+                    <h3 class="text-xl font-semibold mb-3">Ziua 3 – Roma Antică</h3>
+                    <ul class="list-disc pl-5 space-y-2 mb-4 text-sm flex-grow">
+                        <li>Deplasare de la cazare cu metrou linia A până la Termini, apoi linia B până la Colosseo.</li>
+                        <li>Dealul Capitolin și statuia lui Marcus Aurelius.</li>
+                        <li>Altare della Patria (Monumentul Vittorio Emanuele II).</li>
+                        <li>Columna lui Traian.</li>
+                        <li>Forumul Roman și Colina Palatină.</li>
+                        <li>Colosseum și Arcul de Triumf al lui Constantin.</li>
+                        <li>Circus Maximus și Bocca della Verità.</li>
+                    </ul>
+                    <div id="map-day3" class="map mb-3"></div>
+                    <p class="text-sm text-gray-600"><strong>Distanță estimată:</strong> ~5-6 km | <strong>Timp de parcurs:</strong> ~2h</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white text-center py-6 mt-10">
+        <p>Excursie organizată de Alexandru</p>
+        <p class="text-sm mt-1">Toate orele sunt orientative și pot suferi modificări.</p>
+    </footer>
+
+    <!-- Maps Script -->
+    <script>
+        const routes = {
+            day1: [
+                [41.9109, 12.4768],
+                [41.9059, 12.4823],
+                [41.9009, 12.4833],
+                [41.8986, 12.4769],
+                [41.8992, 12.4731]
+            ],
+            day2: [
+                [41.9065, 12.4536],
+                [41.9029, 12.4534],
+                [41.9031, 12.4663]
+            ],
+            day3: [
+                [41.8923, 12.4829],
+                [41.8947, 12.4839],
+                [41.8957, 12.4843],
+                [41.8925, 12.4853],
+                [41.8902, 12.4922],
+                [41.8853, 12.4853],
+                [41.8880, 12.4813]
+            ],
+            ostia: [
+                [41.9010, 12.5018],
+                [41.7322, 12.2760]
+            ]
+        };
+
+        function createMap(id, waypoints) {
+            const map = L.map(id).setView(waypoints[0], 13);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+
+            waypoints.forEach(coord => {
+                L.marker(coord).addTo(map);
+            });
+
+            L.Routing.control({
+                waypoints: waypoints.map(coord => L.latLng(coord[0], coord[1])),
+                router: L.Routing.osrmv1({
+                    serviceUrl: 'https://router.project-osrm.org/route/v1'
+                }),
+                lineOptions: {
+                    styles: [{ color: '#dc2626', weight: 5 }]
+                },
+                show: false,
+                addWaypoints: false,
+                draggableWaypoints: false,
+                fitSelectedRoutes: true,
+                createMarker: function() { return null; }
+            }).addTo(map);
+        }
+
+        // Initialize maps
+        createMap('map-day1', routes.day1);
+        createMap('map-day2', routes.day2);
+        createMap('map-day3', routes.day3);
+        createMap('map-ostia', routes.ostia);
+    </script>
+
+</body>
+</html>
